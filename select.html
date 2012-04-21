@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+	<title>Convert Select</title>
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"/>
+	<script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-dropdown.js"></script>
+	<script type="text/javascript" src="http://twitter.github.com/bootstrap/assets/js/bootstrap-button.js"></script>
+	<script>
+		jQuery(function($){
+			$('select').each(function(i, e){
+				if (!($(e).data('convert') == 'no')) {
+					$(e).hide().wrap('<div class="btn-group" id="select-group-' + i + '" />');
+					var select = $('#select-group-' + i);
+					var current = ($(e).val()) ? $(e).val(): '&nbsp;';
+					select.html('<input type="hidden" value="' + $(e).val() + '" name="' + $(e).attr('name') + '" id="' + $(e).attr('id') + '" class="' + $(e).attr('class') + '" /><a class="btn" href="javascript:;">' + current + '</a><a class="btn dropdown-toggle" data-toggle="dropdown" href="javascript:;"><span class="caret"></span></a><ul class="dropdown-menu"></ul>');
+					$(e).find('option').each(function(o,q) {
+						select.find('.dropdown-menu').append('<li><a href="javascript:;" data-value="' + $(q).attr('value') + '">' + $(q).text() + '</a></li>');
+						if ($(q).attr('selected')) select.find('.dropdown-menu li:eq(' + o + ')').click();
+					});
+					select.find('.dropdown-menu a').click(function() {
+						select.find('input[type=hidden]').val($(this).data('value')).change();
+						select.find('.btn:eq(0)').text($(this).text());
+					});
+				}
+			});
+		});
+	</script>
+	<style>
+		p { line-height: 19px; margin: 10px 0; }
+	</style>
+</head>
+<body>
+
+<div style="padding:20px;">
+	<h1>Convert ALL the Select elements</h1>
+	<p>Here is an example of a <code>select</code> element being converted..</p>
+	
+	<select name="test" id="weee">
+		<option>Test Option 1</option>
+		<option selected>Test Option 2</option>
+		<option value="With Value">Test Option 3</option>
+	</select>
+		
+	<p>..and a <code>select</code> element that is left alone by the snippet with the <code>data-convert</code> value of "no"</p>	
+	
+	<select name="test" id="weee" data-convert="no">
+		<option>Test Option 1</option>
+		<option>Test Option 2</option>
+		<option value="With Value">Test Option 3</option>
+	</select>
+	
+	<p style="font-style:italic;">Update 1: Made selector optimization and now supports the <code>change</code> event.</p>
+
+	<p style="margin-top:50px;">Code Love &#0169; Jamoy. iamjamoy.com</p>
+</div>
+
+</body>
+</html>

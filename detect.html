@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+	<title>Simple Javascript Browser Detection</title>
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css"/>
+	<script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+/*!
+ * Simple Detect class for Device and Browser
+ *
+ * Author:	John Rocela 2012 <me@iamjamoy.com>
+ */
+var detect = {
+
+	ua: navigator.userAgent || navigator.vendor || window.opera,
+	
+	is: function(val, list) {
+		for (var i = 0; i < list.length; i++) {
+			if (this.ua.indexOf(list[i]) != -1) return list[i];
+		}
+		return "Unknown";
+	},
+			
+	device: function(val) {
+		if (val) return (this.ua.indexOf(val) != -1) ? true: false;
+		return this.is(val, ['Mac','Windows','iPhone/iPod', 'Android'])
+	},
+			
+	browser: function(val) {
+		if (val) return (this.ua.indexOf(val) != -1) ? true: false;
+		return this.is(val, ['Chrome','Safari','Opera','Firefox', 'MSIE'])
+	}
+			
+}
+				
+		jQuery(function(){
+			$('#device').html(detect.device());
+		})
+	
+	</script>
+	<style>
+		p { line-height: 19px; margin: 10px 0; }
+	</style>
+</head>
+<body>
+
+<div style="padding:20px;">
+	<h1>Simple Javascript isBrowser() snippet</h1>
+	<p>Here is an example of the <code>isBrowser()</code> method. try it on different browser to see the result.</p>
+	
+	<p>You are using <span id="device" style="font-weight:bold;"></span></p>
+	
+	<p style="margin-top:50px;">Code Love &#0169; Jamoy. iamjamoy.com</p>
+</div>
+
+</body>
+</html>
